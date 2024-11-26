@@ -153,7 +153,7 @@ El rendimiento actual de la red en los laboratorios de la UPT enfrenta limitacio
 
 **Inclusiones:**
 
-- **Recopilación y análisis de datos en tiempo real:** El sistema estará diseñado para recopilar y analizar datos relevantes sobre el rendimiento de la red en tiempo real. Esto incluirá parámetros clave como la velocidad de conexión y los niveles de uso del ancho de banda, proporcionando una visión completa y precisa del estado de la red en cualquier momento.
+- **Recopilación y análisis de datos:** El sistema estará diseñado para recopilar y analizar datos relevantes sobre el rendimiento de la red. Esto incluirá parámetros clave como la velocidad de conexión y los niveles de uso del ancho de banda, proporcionando una visión completa y precisa del estado de la red en todo momento.
 
 - **Generación de alertas automáticas:** El sistema contará con capacidades para generar alertas automáticas cuando se detecten anomalías o caídas en el servicio. Esto permitirá a los administradores y técnicos tomar decisiones rápidas y proactivas para resolver problemas antes de que afecten significativamente a los usuarios.
 
