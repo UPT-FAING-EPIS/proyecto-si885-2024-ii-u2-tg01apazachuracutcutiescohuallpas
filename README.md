@@ -2,7 +2,7 @@
 
 **Descripción:**  
 El **Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)** tiene como objetivo supervisar y gestionar en tiempo real el rendimiento de la red en los laboratorios de la Universidad Privada de Tacna. Esto incluye monitoreo de ancho de banda, estabilidad de la conexión y detección de problemas para optimizar los recursos y garantizar un entorno eficiente.
-
+https://app.powerbi.com/view?r=eyJrIjoiNjMxZDkyYjQtMDFhMy00NTdkLTlkNzYtOWExODc5MGU0YmE3IiwidCI6IjE2NzFiMjY2LTJhNDktNDYyYi05Zjk1LWU4MzFjOGRlMDRkOSIsImMiOjEwfQ%3D%3D
 ## Integrantes
 
 | Nombre                             | Código             |
