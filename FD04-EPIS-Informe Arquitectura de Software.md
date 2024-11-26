@@ -383,7 +383,7 @@ La vista de despliegue muestra la distribución física de los componentes del s
 ### Escenario de Funcionalidad
 
 #### **Evaluación:**
-El sistema debe cumplir con los requerimientos funcionales, proporcionando monitoreo en tiempo real, generación de reportes y alertas automáticas.
+El sistema debe cumplir con los requerimientos funcionales, proporcionando monitoreo, generación de reportes y alertas automáticas.
 
 #### **Descripción:**
 1. **Característica:** Monitoreo en tiempo real de métricas de red.
