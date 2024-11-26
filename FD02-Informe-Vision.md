@@ -117,7 +117,7 @@ e) Estandaraes de calidad y seguridad	](#_toc394513800)42
 
 ## 1. Introducción <span id="introduccion" class="anchor"></span>
 
-Este documento de visión presenta el proyecto "Herramienta de Seguimiento y Evaluación del Desempeño de Red en Computadoras UPT", cuyo objetivo es mejorar la gestión y optimización de los recursos tecnológicos en los laboratorios de la Universidad Privada de Tacna. La herramienta permitirá un monitoreo continuo y análisis detallado del rendimiento de la red, proporcionando datos críticos para la toma de decisiones en la administración de la infraestructura tecnológica.
+Este documento de visión presenta el proyecto "Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)", cuyo objetivo es mejorar la gestión y optimización de los recursos tecnológicos en los laboratorios de la Universidad Privada de Tacna. La herramienta permitirá un monitoreo continuo y análisis detallado del rendimiento de la red, proporcionando datos críticos para la toma de decisiones en la administración de la infraestructura tecnológica.
 
 ### 1.1 Propósito <span id="proposito" class="anchor"></span>
 
