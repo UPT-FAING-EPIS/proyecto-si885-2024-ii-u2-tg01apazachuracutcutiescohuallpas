@@ -10,14 +10,6 @@ resource "aws_s3_bucket" "s3_bucket" {
   }
 }
 
-# Configuración de uso para Infracost
-resource "infracost_usage" "s3" {
-  resource_id          = aws_s3_bucket.s3_bucket.id
-  monthly_storage_gb   = var.s3_storage_gb
-  monthly_put_requests = var.s3_put_requests
-  monthly_get_requests = var.s3_get_requests
-}
-
 # Crear la base de datos en AWS Glue Data Catalog
 resource "aws_glue_catalog_database" "albertapaza_database" {
   name        = "tb_redupt_database"
@@ -48,12 +40,6 @@ resource "aws_glue_crawler" "netuptinteligencianegocios_crawler" {
   }
 
   depends_on = [aws_s3_bucket.s3_bucket] # Asegura que el bucket S3 sea creado antes del Crawler
-}
-
-# Configuración de uso para el Crawler de Glue (Infracost)
-resource "infracost_usage" "glue" {
-  resource_id  = aws_glue_crawler.netuptinteligencianegocios_crawler.id
-  monthly_hours = var.crawler_hours
 }
 
 # Crear el rol IAM LabRole
@@ -89,6 +75,7 @@ resource "aws_iam_policy" "in_rol_policy" {
   })
 }
 
+
 # Asociar la política al rol LabRole
 resource "aws_iam_role_policy_attachment" "in_rol_policy_attachment" {
   role       = aws_iam_role.lab_role.name
@@ -113,13 +100,6 @@ resource "aws_lambda_function" "s3_upload_lambda" {
   }
 }
 
-# Configuración de uso para la función Lambda (Infracost)
-resource "infracost_usage" "lambda" {
-  resource_id                = aws_lambda_function.s3_upload_lambda.id
-  monthly_requests           = var.lambda_requests
-  monthly_execution_gb_seconds = var.lambda_execution_time_gb_seconds
-}
-
 # Crear un evento en S3 para activar la función Lambda
 resource "aws_s3_bucket_notification" "s3_event_to_lambda" {
   bucket = aws_s3_bucket.s3_bucket.bucket
@@ -139,3 +119,9 @@ resource "aws_lambda_permission" "allow_s3_to_invoke_lambda" {
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.s3_bucket.arn
 }
+
+#gets id
+#2 aws glue get-crawler --name netuptinteligencianegocios-crawler
+#0 subir ejecutar ecript pythonde subir csv
+#aws glue get-crawler --name netuptinteligencianegocios-crawler
+#aws glue get-databases
