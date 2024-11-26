@@ -210,7 +210,7 @@ La vista de caso de uso describe las principales funcionalidades del sistema des
 
 ### **Actores**
 1. **Técnico de Soporte:**
-   - Responsable del monitoreo en tiempo real de las métricas de red.
+   - Responsable del monitoreo de las métricas de red.
    - Detecta y soluciona problemas de conectividad utilizando las alertas generadas por el sistema.
    - Genera reportes personalizados para analizar tendencias y patrones de uso.
 
