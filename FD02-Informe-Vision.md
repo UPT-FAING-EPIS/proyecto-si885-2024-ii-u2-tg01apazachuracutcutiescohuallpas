@@ -275,7 +275,7 @@ Instalación: La instalación del sistema se llevará a cabo en los laboratorios
 
 ## 5. Características del producto <span id="caracteristicas-producto" class="anchor"></span>
 
-Monitoreo en tiempo real: Seguimiento continuo del consumo de red en las computadoras de los laboratorios.
+Monitoreo continuo: Seguimiento del consumo de red en las computadoras de los laboratorios.
     
 Generación de reportes automatizados: Creación de informes personalizados sobre el estado y uso de la red, facilitando la toma de decisiones informadas.
     
