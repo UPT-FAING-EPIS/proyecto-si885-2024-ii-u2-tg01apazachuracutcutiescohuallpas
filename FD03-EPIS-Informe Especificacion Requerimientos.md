@@ -138,7 +138,7 @@ El rendimiento actual de la red en los laboratorios de la UPT enfrenta limitacio
 
 #### 3. Objetivos de Diseño
 
-- **Ingesta continua de datos:** Diseñar una plataforma que permita la recopilación y procesamiento continuo de datos críticos sobre el rendimiento de la red, como velocidad de conexión y consumo de ancho de banda, asegurando que esta información esté disponible en tiempo real.
+- **Ingesta continua de datos:** Diseñar una plataforma que permita la recopilación y procesamiento continuo de datos críticos sobre el rendimiento de la red, como velocidad de conexión y consumo de ancho de banda, asegurando que esta información esté siempre disponible.
 
 - **Interactividad y facilidad de uso:** Crear una interfaz interactiva e intuitiva que facilite la navegación y gestión del sistema por parte de los técnicos responsables, independientemente de su nivel de experiencia técnica.
 
