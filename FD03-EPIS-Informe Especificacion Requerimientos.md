@@ -214,7 +214,7 @@ Este presupuesto permite cubrir todos los aspectos esenciales del proyecto, aseg
 
 **Factibilidad Operativa**
 
-- **Optimización de Recursos:** La herramienta permitirá maximizar la utilización de los recursos tecnológicos al proporcionar datos detallados sobre el uso de la red en tiempo real. Esto ayudará a la universidad a planificar con mayor precisión el mantenimiento, la actualización o la redistribución de los recursos disponibles.
+- **Optimización de Recursos:** La herramienta permitirá maximizar la utilización de los recursos tecnológicos al proporcionar datos detallados sobre el uso de la red. Esto ayudará a la universidad a planificar con mayor precisión el mantenimiento, la actualización o la redistribución de los recursos disponibles.
   
 - **Mejora en la Toma de Decisiones:** Con acceso a información precisa sobre el desempeño de la infraestructura tecnológica, los administradores podrán adoptar decisiones informadas y basadas en datos, mejorando tanto la eficiencia operativa como la calidad del servicio ofrecido a estudiantes y docentes.
   
