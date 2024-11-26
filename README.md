@@ -18,7 +18,66 @@ El **Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)** 
 
 
 
-Aquí tienes tu guía en formato Markdown:
+
+```markdown
+# Inventario de Archivos y Carpetas
+
+## **Carpeta Raíz**
+### Archivos Principales
+1. **`data/`**  
+   - Carpeta que contiene los archivos de datos en formato CSV.
+2. **`G02_UPTRED.pbix`**  
+   - Archivo de Power BI para el análisis y visualización de datos.
+3. **`lambda_function.zip`**  
+   - Archivo comprimido que contiene el código necesario para la función Lambda.
+     - `s3bucket.py`: Script para subir datos al bucket de S3.
+     - `datos_combinados.csv`: Archivo combinado generado a partir de los datos en `data`.
+4. **`requirements.txt`**  
+   - Archivo con las dependencias necesarias para ejecutar los scripts relacionados.
+5. **`s3bucket.py`**  
+   - Script Python para subir datos al bucket S3.
+6. **`sqlcsv.py`**  
+   - Script Python que toma los archivos CSV en la carpeta `data` y genera el archivo `datos_combinados.csv`.
+
+---
+
+## **Carpeta PruebasExpo**
+### Archivos y Aplicaciones
+1. **`APPs3uploaddata.exe`**  
+   - Aplicación desarrollada en Python para subir archivos CSV al bucket S3.
+2. **`final data prueba.csv`**  
+   - Archivo CSV de prueba para insertar datos durante la demostración.
+3. **`s3uploaddata.py`**  
+   - Código fuente de la aplicación **`APPs3uploaddata.exe`**.
+
+---
+
+### **Estructura General**
+
+```
+/
+├── data/
+│   ├── [Archivos CSV...]
+├── G02_UPTRED.pbix
+├── lambda_function.zip
+│   ├── s3bucket.py
+│   ├── datos_combinados.csv
+├── requirements.txt
+├── s3bucket.py
+├── sqlcsv.py
+├── PruebasExpo/
+│   ├── APPs3uploaddata.exe
+│   ├── final data prueba.csv
+│   ├── s3uploaddata.py
+```
+
+### **Notas**
+- **`data/`**: Asegúrate de que esta carpeta contiene los archivos CSV necesarios antes de ejecutar `sqlcsv.py`.
+- **`APPs3uploaddata.exe`**: Es una versión compilada de Python y debe ser probada antes de la exposición.
+- **`final data prueba.csv`**: Archivo dedicado a las pruebas de inserción durante la exposición.
+- **`s3bucket.py` y `sqlcsv.py`**: Los scripts deben ser configurados adecuadamente con las credenciales y configuraciones del bucket S3.
+```
+
 
 ```markdown
 # EJECUCIÓN DE AUTOMATIZACIÓN DE RECURSOS
