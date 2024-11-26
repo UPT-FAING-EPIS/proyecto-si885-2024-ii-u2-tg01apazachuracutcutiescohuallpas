@@ -2,7 +2,9 @@
 
 **Descripción:**  
 El **Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)** tiene como objetivo supervisar y gestionar en tiempo real el rendimiento de la red en los laboratorios de la Universidad Privada de Tacna. Esto incluye monitoreo de ancho de banda, estabilidad de la conexión y detección de problemas para optimizar los recursos y garantizar un entorno eficiente.
-https://app.powerbi.com/view?r=eyJrIjoiNjMxZDkyYjQtMDFhMy00NTdkLTlkNzYtOWExODc5MGU0YmE3IiwidCI6IjE2NzFiMjY2LTJhNDktNDYyYi05Zjk1LWU4MzFjOGRlMDRkOSIsImMiOjEwfQ%3D%3D
+
+
+
 ## Integrantes
 
 | Nombre                             | Código             |
@@ -12,6 +14,21 @@ https://app.powerbi.com/view?r=eyJrIjoiNjMxZDkyYjQtMDFhMy00NTdkLTlkNzYtOWExODc5M
 | Ricardo Cutipa Gutierrez           | (2021069827)       |
 | Erick Churacutipa Blass            | (2020067578)       |
 | Jesus Huallpa Maron                | (2021071085)       |
+
+
+## Reporte de Power BI
+Puedes acceder al reporte de Power BI haciendo clic en el siguiente enlace:
+
+[Ver Reporte en Power BI](https://app.powerbi.com/view?r=eyJrIjoiNjMxZDkyYjQtMDFhMy00NTdkLTlkNzYtOWExODc5MGU0YmE3IiwidCI6IjE2NzFiMjY2LTJhNDktNDYyYi05Zjk1LWU4MzFjOGRlMDRkOSIsImMiOjEwfQ%3D%3D)
+
+## Diagramas
+
+### 1. Construcción de la Infraestructura
+![Construcción de la Infraestructura](media/diagramaBrainboard.png)
+
+### 2. Interacción del Usuario sobre lo Creado
+![Interacción del Usuario](media/Brainboard - athena.png)
+
 
 ## Inventario de Archivos y Carpetas
 
