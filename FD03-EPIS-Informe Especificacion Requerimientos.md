@@ -388,7 +388,7 @@ Realiza acciones para solucionar los problemas de red (por ejemplo, ajustes de c
 | **Flujo Normal**  |    |
 | **Acción del Actor**                                             | **Curso del Sistema**                                                                                   |
 | 1. Ingresa a la configuración del dashboard desde el menú principal. | 2. Muestra una lista de métricas disponibles y opciones de configuración de gráficos.                   |
-| 3. Selecciona las métricas y los gráficos a incluir en el dashboard. | 4. Actualiza en tiempo real la configuración del dashboard.                                              |
+| 3. Selecciona las métricas y los gráficos a incluir en el dashboard. | 4. Actualiza la configuración del dashboard.                                              |
 | 5. Guarda los cambios realizados.                                | 6. Presenta una vista previa del dashboard personalizado.                                               |
 
 ---
