@@ -22,7 +22,6 @@ Escobar Rejas, Carlos Andrés (2021070016)
 Apaza Ccalle, Albert Kenyi   (2021071075)  
 Cutipa Gutierrez, Ricardo    (2021069827)  
 Churacutipa Blass, Erick     (2020067578)  
-Churacutipa Blas, Erick     (2020067578)  
 Huallpa Maron, Jesus Antonio (2021071085) 
 
 **Tacna – Perú**
