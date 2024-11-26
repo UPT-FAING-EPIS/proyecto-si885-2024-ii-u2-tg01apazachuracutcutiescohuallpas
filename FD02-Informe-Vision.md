@@ -175,7 +175,7 @@ Metodología: Utilización de un script en Python para recopilar datos de rendim
 |--------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | **LA NECESIDAD** | La necesidad de un monitoreo continuo y detallado se vuelve crucial para asegurar la eficiencia de la infraestructura de red. |
 | **EL PROBLEMA** | La falta de un sistema de monitoreo automatizado provoca una falta de visibilidad sobre el uso de recursos de red. |
-| **LA SOLUCIÓN** | Implementar una herramienta de monitoreo que permita la evaluación continua del rendimiento de red, proporcionando datos en tiempo real y alertas. |
+| **LA SOLUCIÓN** | Implementar una herramienta de monitoreo que permita la evaluación continua del rendimiento de red, proporcionando datos y alertas. |
 
 
 <div style="page-break-after: always; visibility: hidden">\pagebreak</div>
