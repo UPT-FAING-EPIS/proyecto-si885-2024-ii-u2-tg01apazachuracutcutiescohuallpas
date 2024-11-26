@@ -38,12 +38,7 @@ jobs:
           cd terravision
           chmod +x terravision
           export PATH=$PATH:$(pwd)
-      - name: Remove AWS and MongoDB Resources
-        run: |
-          cd terraform_repo
-          # Mover archivos con recursos de AWS y MongoDB Atlas a una carpeta temporal
-          mkdir -p ../backup_resources
-          find . -type f -name "*.tf" -exec grep -l -E 'provider "(aws|mongodbatlas)"|resource "(aws|mongodbatlas)' {} \; -exec mv {} ../backup_resources/ \;
+
       - name: Generate Terraform Plan
         run: |
           cd terraform_repo
