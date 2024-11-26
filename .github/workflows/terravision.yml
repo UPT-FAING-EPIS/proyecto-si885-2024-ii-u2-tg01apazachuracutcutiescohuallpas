@@ -30,20 +30,13 @@ jobs:
           git clone https://github.com/patrickchugh/terravision.git
           cd terravision
           chmod +x terravision
-          export PATH=$PATH:$(pwd)
-
+            export PATH=$PATH:$(pwd)
+            
       - name: Generate Terraform Plan
         run: |
-          cd infra
+          cd infra # Asegúrate de estar en la carpeta correcta que contiene tu main.tf
           terraform init
-          terraform plan -out=tfplan \
-            -var="aws_region=us-east-1" \
-            -var="s3_storage_gb=100" \
-            -var="s3_put_requests=1000" \
-            -var="s3_get_requests=1000" \
-            -var="crawler_hours=24" \
-            -var="lambda_requests=10000" \
-            -var="lambda_execution_time_gb_seconds=1000" \
+          terraform plan -out=tfplan -var="aws_region=us-east-1" \
             -var="bucket_name=netuptinteligencianegocios" \
             -var="glue_database_name=tb_redupt_database" \
             -var="glue_crawler_name=netuptinteligencianegocios-crawler" \
@@ -51,97 +44,42 @@ jobs:
             -var="lambda_runtime=python3.8" \
             -var="lambda_timeout=30" \
             -var="lambda_memory_size=128" \
-            -var='lambda_function_zip=../artefactos/lambda_function.zip' \
             -var="role_name=LabRole" \
             -var="policy_name=InRol" \
             -var="role_policy_arn=arn:aws:iam::571600849867:role/LabRole"
           terraform show -json tfplan > tfplan.json
-
+  
+      # Paso 3: Ejecutar Terravision para generar el diagrama desde infra/main.tf
       - name: Run Terravision to Generate Diagram
         run: |
-          cd terravision
-          ./terravision draw --source ../terraform_repo
+          cd infra
+          terravision draw --source . # Ejecuta Terravision directamente en la carpeta donde se encuentra main.tf
           mv output.png ../diagram.png || mv diagram.png ../diagram.png || echo "El archivo no se generó como se esperaba"
+  
+      # Paso 4: Generar README.md
       - name: Generate README.md
         run: |
-          echo "# DIAGRAMAS " > README.md
+          echo "# Diagrama de Infraestructura" > README.md
           echo "" >> README.md
-          echo "En esta rama se generan los diagramas de infraestructura del repositorio proyecto-si8811a-2024-ii-u1-desarrollo-api-back y develop, la rama donde están los archivos TF." >> README.md
-          echo "" >> README.md
-          # Añade el diagrama al README.md
+          echo "Este diagrama fue generado automáticamente a partir del archivo main.tf." >> README.md
           echo "## Diagrama de Infraestructura" >> README.md
-          echo "![Diagrama de Infraestructura](Brainboard%20-%20diagrama.png)" >> README.md
+          echo "![Diagrama de Infraestructura](diagram.png)" >> README.md
           echo "" >> README.md
-          # Añade la estructura de archivos y lista de recursos como antes
-          
-          # Primer Diagrama: Diagrama de Infraestructura
-          echo "## Diagrama de Infraestructura" >> README.md
-          echo '```mermaid' >> README.md
-          echo "graph TD;" >> README.md
-          
-          # Inicializar variable para almacenar la lista de archivos .tf
-          tf_files=""
-          # Analizar los archivos .tf en el repositorio clonado
-          for file in $(find terraform_repo -name "*.tf"); do
-            echo "Analizando $file"
-            tf_files="$tf_files\n- $file"
-            grep 'resource "' $file | awk -F '"' '{print $2}' | while read resource; do
-              echo "    $resource --> AWS" >> README.md
-            done
-          done
-          
-          echo '```' >> README.md
-          echo "" >> README.md
-          
-          # Segundo Diagrama: Estructura de Archivos
-          echo "## Diagrama de Estructura de Archivos" >> README.md
-          echo '```mermaid' >> README.md
-          echo "graph TD;" >> README.md
-          
-          # Añadir las carpetas al diagrama
-          find terraform_repo -type d | while read dir; do
-            dir_name=$(basename "$dir")
-            parent_dir=$(dirname "$dir" | xargs basename)
-            if [ "$parent_dir" != "." ]; then
-              echo "    $parent_dir --> $dir_name" >> README.md
-            else
-              echo "    Root --> $dir_name" >> README.md
-            fi
-          done
-          
-          # Añadir los archivos al diagrama
-          find terraform_repo -type f | while read file; do
-            file_name=$(basename "$file")
-            dir_name=$(dirname "$file" | xargs basename)
-            
-            # Evitar el uso de comillas en los nombres de archivo
-            if [[ "$file_name" == "graph.dot" ]]; then
-              echo "    $dir_name --> graph_dot" >> README.md
-            else
-              echo "    $dir_name --> $file_name" >> README.md
-            fi
-          done
-          
-          echo '```' >> README.md
-          echo "" >> README.md
-          
-          # Lista de archivos .tf y recursos
           echo "## Archivos Terraform Analizados" >> README.md
-          tf_files=""
-          for file in $(find terraform_repo -name "*.tf"); do
-            tf_files="$tf_files\n- $file"
-          done
-          echo -e "$tf_files" >> README.md
-          
+          echo "- infra/main.tf" >> README.md
+          echo "" >> README.md
           echo "## Recursos Utilizados" >> README.md
-          echo "- MongoDB" >> README.md
-          echo "- Grafana" >> README.md
-          echo "- Aplicaciones Web y Móviles" >> README.md
-          echo "- API Backend" >> README.md
-      - name: Commit and Push README.md
+          echo "- S3 Bucket" >> README.md
+          echo "- AWS Glue Database" >> README.md
+          echo "- Glue Crawler" >> README.md
+          echo "- Lambda Function" >> README.md
+          echo "- IAM Role" >> README.md
+  
+      # Paso 5: Commit y push de los cambios generados
+      - name: Commit and Push README.md y Diagrama
         run: |
-          git config --local user.name "jesus huallpa"
-          git config --local user.email "jh2021071085@virtual.upt.pe"
+          git config --local user.name "tu_usuario"
+          git config --local user.email "tu_email@example.com"
           if [ -f "diagram.png" ]; then
             git add README.md diagram.png
           else
@@ -149,4 +87,4 @@ jobs:
             git add README.md
           fi
           git commit -m "Generar README.md y diagrama automáticamente" || echo "No hay cambios para commit"
-          git push origin DesarrolloApiBack
+          git push origin main # Cambia 'main' a la rama en la que estás trabajando
