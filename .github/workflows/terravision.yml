@@ -36,18 +36,9 @@ jobs:
         run: |
           cd infra # Asegúrate de estar en la carpeta correcta que contiene tu main.tf
           terraform init
-          terraform plan -out=tfplan -var="aws_region=us-east-1" \
-            -var="bucket_name=netuptinteligencianegocios" \
-            -var="glue_database_name=tb_redupt_database" \
-            -var="glue_crawler_name=netuptinteligencianegocios-crawler" \
-            -var="lambda_function_name=s3-upload-function" \
-            -var="lambda_runtime=python3.8" \
-            -var="lambda_timeout=30" \
-            -var="lambda_memory_size=128" \
-            -var="role_name=LabRole" \
-            -var="policy_name=InRol" \
-            -var="role_policy_arn=arn:aws:iam::571600849867:role/LabRole"
+          terraform plan -out=tfplan # Sin variables adicionales
           terraform show -json tfplan > tfplan.json
+
   
       # Paso 3: Ejecutar Terravision para generar el diagrama desde infra/main.tf
       - name: Run Terravision to Generate Diagram
