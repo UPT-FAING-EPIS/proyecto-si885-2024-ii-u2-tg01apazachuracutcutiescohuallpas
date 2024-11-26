@@ -146,12 +146,12 @@ El documento incluye ahora los nuevos flujos y tecnologías integrados en el sis
 
 |  ID   | Descripción                                                                                           | Prioridad |
 | :---: | :---------------------------------------------------------------------------------------------------- | :-------: |
-| RF-01 | Monitorear en tiempo real el uso del tráfico de red de los equipos. |   Alta    |
+| RF-01 | Monitorear el uso del tráfico de red de los equipos. |   Alta    |
 | RF-02 | Generar reportes detallados y personalizables sobre el rendimiento de los equipos y patrones de uso.   |   Alta    |
 | RF-03 | Detectar, notificar y registrar anomalías en el rendimiento de los recursos tecnológicos.              |   Alta    |
 | RF-04 | Exportar datos en formatos compatibles con Tableau (CSV, Excel) y JSON.                               |   Alta    |
 | RF-05 | Almacenar datos históricos para análisis a largo plazo y comparativas de rendimiento.                  |   Alta    |
-| RF-06 | Proporcionar un panel de control interactivo para visualizar datos clave en tiempo real.               |   Alta    |
+| RF-06 | Proporcionar un panel de control interactivo para visualizar datos clave.             |   Alta    |
 | RF-07 | Permitir la integración con otros sistemas de gestión de la universidad mediante API REST.             |  Media    |
 
 ### 2.2 Requerimientos No Funcionales – Atributos de Calidad
