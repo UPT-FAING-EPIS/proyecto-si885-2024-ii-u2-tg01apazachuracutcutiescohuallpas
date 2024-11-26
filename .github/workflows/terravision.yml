@@ -41,15 +41,17 @@ jobs:
         run: |
           pip3 install graphviz numpy==1.21.0 GitPython tqdm debugpy ipaddr
 
-      # Paso 6: Clonar el repositorio de Terravision y configurarlo
+      # Paso 6: Clonar el repositorio de Terravision y sus dependencias
       - name: Clone Terravision Repository and Install
         run: |
           cd infra
           git clone https://github.com/patrickchugh/terravision.git
           cd terravision
+          # Instalar dependencias de Terravision
+          pip3 install -r requirements.txt
           chmod +x terravision
           sudo mv terravision /usr/local/bin/ # Mover terravision al PATH para su uso global
-          
+
       # Paso 7: Inicializar y planificar Terraform en infra
       - name: Generate Terraform Plan
         run: |
