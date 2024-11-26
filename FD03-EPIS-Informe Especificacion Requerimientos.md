@@ -114,7 +114,7 @@ La misión del sistema es garantizar un monitoreo efectivo y continuo del rendim
 
 El rendimiento actual de la red en los laboratorios de la UPT enfrenta limitaciones significativas que impactan directamente en la experiencia de los usuarios:
 
-- **Falta de visibilidad y monitoreo proactivo:** No existe un sistema que permita rastrear el estado de la red en tiempo real, lo que dificulta identificar problemas como caídas o picos de consumo antes de que afecten el servicio.
+- **Falta de visibilidad y monitoreo proactivo:** No existe un sistema que permita rastrear el estado de la red, lo que dificulta identificar problemas como caídas o picos de consumo antes de que afecten el servicio.
 
 - **Resolución reactiva de incidentes:** La identificación de fallos se produce únicamente después de que los usuarios los reportan, lo que retrasa la respuesta y amplifica el impacto de los problemas.
 
