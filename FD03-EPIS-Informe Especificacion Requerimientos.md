@@ -188,13 +188,13 @@ El rendimiento actual de la red en los laboratorios de la UPT enfrenta limitacio
 
 **Infraestructura de Red**
 
-- **Conectividad estable:** Es esencial contar con una conexión a internet confiable y de alta velocidad en los laboratorios para garantizar la ingesta continua de datos y el funcionamiento del sistema en tiempo real.
+- **Conectividad estable:** Es esencial contar con una conexión a internet confiable y de alta velocidad en los laboratorios para garantizar la ingesta continua de datos y el funcionamiento del sistema.
 - **Equipos de red gestionados:** Dispositivos como switches y routers con capacidades avanzadas que soporten el monitoreo de tráfico y permitan ajustes dinámicos según las necesidades detectadas.
 
 **Automatización y Configuración**
 
 - El uso de Terraform asegura la consistencia en la configuración de entornos de desarrollo, pruebas y producción, reduciendo errores manuales y acelerando los despliegues.
-- Scripts desarrollados en Python con HCL2 automatizan la interacción entre los nodos de monitoreo y el servidor central, optimizando la recolección y análisis de datos en tiempo real.
+- Scripts desarrollados en Python con HCL2 automatizan la interacción entre los nodos de monitoreo y el servidor central, optimizando la recolección y análisis de datos.
 
 ##### 5.2. Viabilidad Económica
 
