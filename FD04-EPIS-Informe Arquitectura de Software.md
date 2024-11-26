@@ -103,11 +103,12 @@ Estas mejoras refuerzan la funcionalidad del sistema y lo alinean con estándare
 ### 1.2 Alcance
 El sistema ahora incluye los siguientes componentes clave:
 
-Repositorio inicial: Recepción de datos en formato CSV desde distintas fuentes.
-AWS Lambda: Ejecución automatizada de scripts en Python para procesar los datos de red.
-AWS S3 y Glue: Almacenamiento y configuración automática de los datos, generando tablas para consulta y análisis.
-AWS Athena: Plataforma de consulta para procesar los datos mediante SQL y generar métricas clave.
-Power BI: Visualización avanzada e interactiva de los datos en tiempo real.
+**Repositorio inicial**: Recepción de datos en formato CSV desde distintas fuentes.  
+**AWS Lambda**: Ejecución automatizada de scripts en Python para procesar los datos de red.  
+**AWS S3 y Glue**: Almacenamiento y configuración automática de los datos, generando tablas para consulta y análisis.  
+**AWS Athena**: Plataforma de consulta para procesar los datos mediante SQL y generar métricas clave.  
+**Power BI**: Visualización avanzada e interactiva de los datos.  
+
 El alcance sigue centrado en el análisis del desempeño de la red en los laboratorios, pero ahora abarca:
 
 Automatización del flujo de datos en la nube.
