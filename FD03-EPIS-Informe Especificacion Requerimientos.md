@@ -227,7 +227,7 @@ Durante el levantamiento de información para el desarrollo del sistema, se iden
 
 **Necesidades de los Técnicos de Soporte:**
 
-- Requieren una herramienta centralizada para monitorear el estado de la red en tiempo real, con alertas automáticas que les permitan identificar problemas antes de que afecten a los usuarios.
+- Requieren una herramienta centralizada para monitorear el estado de la red, con alertas que les permitan identificar problemas antes de que afecten a los usuarios.
 
 **Requerimientos de los Administradores:**
 
@@ -314,7 +314,7 @@ Informa al encargado de TI sobre los problemas detectados, proporcionando detall
 Encargado del Área de TI (Soporte Técnico)
 
 **Descripción:**
-El Encargado del Área de TI es responsable de gestionar el monitoreo de la red en los laboratorios, asegurando que el tráfico de la red sea adecuado para las actividades académicas. Este perfil tiene acceso al dashboard para verificar y analizar el tráfico de la red en tiempo real.
+El Encargado del Área de TI es responsable de gestionar el monitoreo de la red en los laboratorios, asegurando que el tráfico de la red sea adecuado para las actividades académicas. Este perfil tiene acceso al dashboard para verificar y analizar el tráfico de la red.
 
 **Responsabilidades:**
 
