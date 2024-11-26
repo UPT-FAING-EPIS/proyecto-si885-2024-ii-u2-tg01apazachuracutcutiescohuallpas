@@ -1,4 +1,4 @@
-name: Generate DIAGRAMA AWS
+name: Generate AWS Diagram
 
 on:
   push:
@@ -15,89 +15,53 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Paso 2: Configurar credenciales de AWS para Terraform
-      - name: Set up AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1  # Puedes cambiar la región según sea necesario
-          
-      # Paso 3: Instalar Terraform
+      # Paso 2: Instalar Terraform
       - name: Install Terraform
         run: |
           curl -LO https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
           unzip terraform_1.0.0_linux_amd64.zip
           sudo mv terraform /usr/local/bin/
 
-      # Paso 4: Instalar dependencias necesarias
+      # Paso 3: Instalar dependencias necesarias
       - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y graphviz python3-pip
 
-      # Paso 5: Instalar módulos de Python necesarios
-      - name: Install Python Modules
+      # Paso 4: Instalar Terravision
+      - name: Install Terravision
         run: |
-          pip3 install graphviz numpy==1.21.0 GitPython tqdm debugpy ipaddr
-
-      # Paso 6: Clonar el repositorio de Terravision y sus dependencias
-      - name: Clone Terravision Repository and Install Dependencies
-        run: |
-          cd infra
           git clone https://github.com/patrickchugh/terravision.git
           cd terravision
-          # Verificar si requirements.txt existe y si es así, instalar las dependencias
-          if [ -f "requirements.txt" ]; then
-            pip3 install -r requirements.txt
-          fi
+          pip3 install -r requirements.txt  # Instalar dependencias de Python si están disponibles
           chmod +x terravision
-          sudo mv terravision /usr/local/bin/ # Mover terravision al PATH para su uso global
+          sudo mv terravision /usr/local/bin/  # Mover terravision al PATH para su uso global
 
-      # Paso 7: Inicializar y planificar Terraform en infra
-      - name: Generate Terraform Plan
+      # Paso 5: Crear un archivo Terraform simple
+      - name: Create Simple Terraform Configuration
+        run: |
+          mkdir -p infra
+          echo 'provider "aws" { region = "us-east-1" }' > infra/main.tf
+          echo 'resource "aws_s3_bucket" "example" { bucket = "my-terraform-bucket" acl = "private" }' >> infra/main.tf
+
+      # Paso 6: Inicializar Terraform
+      - name: Terraform Init
         run: |
           cd infra
           terraform init
-          terraform plan -out=tfplan
-          terraform show -json tfplan > tfplan.json
 
-      # Paso 8: Ejecutar Terravision para generar el diagrama desde infra/main.tf
-      - name: Run Terravision to Generate Diagram
+      # Paso 7: Ejecutar Terravision para generar el diagrama
+      - name: Generate Diagram with Terravision
         run: |
           cd infra
-          terravision draw --source . # Ejecuta Terravision directamente en la carpeta donde se encuentra main.tf
+          terravision draw --source . # Ejecuta Terravision en la carpeta donde se encuentra main.tf
           mv output.png ../diagram.png || mv diagram.png ../diagram.png || echo "El archivo no se generó como se esperaba"
 
-      # Paso 9: Generar README.md
-      - name: Generate README.md
-        run: |
-          echo "# Diagrama de Infraestructura" > README.md
-          echo "" >> README.md
-          echo "Este diagrama fue generado automáticamente a partir del archivo main.tf." >> README.md
-          echo "## Diagrama de Infraestructura" >> README.md
-          echo "![Diagrama de Infraestructura](diagram.png)" >> README.md
-          echo "" >> README.md
-          echo "## Archivos Terraform Analizados" >> README.md
-          echo "- infra/main.tf" >> README.md
-          echo "" >> README.md
-          echo "## Recursos Utilizados" >> README.md
-          echo "- S3 Bucket" >> README.md
-          echo "- AWS Glue Database" >> README.md
-          echo "- Glue Crawler" >> README.md
-          echo "- Lambda Function" >> README.md
-          echo "- IAM Role" >> README.md
-
-      # Paso 10: Commit y push de los cambios generados
-      - name: Commit and Push README.md y Diagrama
+      # Paso 8: Subir el diagrama generado a la rama
+      - name: Commit and Push Diagram
         run: |
           git config --local user.name "tu_usuario"
           git config --local user.email "tu_email@example.com"
-          if [ -f "diagram.png" ]; then
-            git add README.md diagram.png
-          else
-            echo "El archivo diagram.png no se generó"
-            git add README.md
-          fi
-          git commit -m "Generar README.md y diagrama automáticamente" || echo "No hay cambios para commit"
-          git push origin main # Cambia 'main' a la rama en la que estás trabajando
+          git add diagram.png
+          git commit -m "Generar diagrama de infraestructura con Terraform"
+          git push origin main
