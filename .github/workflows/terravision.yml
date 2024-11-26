@@ -1,4 +1,4 @@
-name: Generate README.md
+name: Generate DIAGRAMA AWS
 
 on:
   push:
