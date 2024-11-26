@@ -269,7 +269,7 @@ El siguiente diagrama muestra una visión global de las interacciones entre los 
 #### **Descripción de los Escenarios**
 1. **Monitorear Estado de la Red (CU01):**
    - **Actor Principal:** Técnico de Soporte.
-   - **Descripción:** Permite supervisar en tiempo real las métricas de red y recibir alertas sobre posibles problemas.
+   - **Descripción:** Permite supervisar las métricas de red y recibir alertas sobre posibles problemas.
    - **Relaciones:** Incluye casos de uso secundarios, como detección de anomalías y generación de alertas automáticas.
 
 2. **Generar Reportes de Uso (CU02):**
