@@ -22,7 +22,26 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1  # Puedes cambiar la región según sea necesario
-
+          
+      - name: Install Terraform
+        run: |
+          curl -LO https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
+          unzip terraform_1.0.0_linux_amd64.zip
+          sudo mv terraform /usr/local/bin/
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz python3-pip
+      - name: Install Python Modules
+        run: |
+          pip3 install graphviz numpy==1.21.0 GitPython tqdm debugpy ipaddr
+      - name: Clone Terravision Repository
+        run: |
+          git clone https://github.com/patrickchugh/terravision.git
+          cd terravision
+          chmod +x terravision
+            export PATH=$PATH:$(pwd)
+            
       # Paso 3: Inicializar y planificar Terraform en infra
       - name: Generate Terraform Plan
         run: |
