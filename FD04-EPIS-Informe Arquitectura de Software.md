@@ -194,7 +194,7 @@ El documento incluye ahora los nuevos flujos y tecnologías integrados en el sis
 
 ### **Restricciones Operativas**
 - El sistema debe operar sin interrupciones en horarios laborales (de 8:00 AM a 8:00 PM), con disponibilidad mínima del 95%.
-- El panel de control y reportes deben estar disponibles en tiempo real con un tiempo de respuesta no mayor a 2 segundos para consultas críticas.
+- El panel de control y reportes deben estar disponibles con un tiempo de respuesta rápido para consultas críticas.
 
 ### **Restricciones de Escalabilidad**
 - El sistema debe ser capaz de integrar nuevos laboratorios o áreas sin necesidad de rediseñar la arquitectura base.
