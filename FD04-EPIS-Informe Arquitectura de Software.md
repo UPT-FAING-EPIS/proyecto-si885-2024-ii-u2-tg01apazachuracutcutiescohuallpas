@@ -386,7 +386,7 @@ La vista de despliegue muestra la distribución física de los componentes del s
 El sistema debe cumplir con los requerimientos funcionales, proporcionando monitoreo, generación de reportes y alertas automáticas.
 
 #### **Descripción:**
-1. **Característica:** Monitoreo en tiempo real de métricas de red.
+1. **Característica:** Monitoreo de métricas de red.
 2. **Capacidad:** Generar reportes personalizados basados en datos históricos.
 3. **Requerimiento clave:** Detectar anomalías en el rendimiento y notificar automáticamente a los técnicos.
 
