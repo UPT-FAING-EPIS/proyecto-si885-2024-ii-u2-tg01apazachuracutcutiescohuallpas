@@ -345,12 +345,12 @@ Realiza acciones para solucionar los problemas de red (por ejemplo, ajustes de c
 | **Caso de Uso**  | Monitorear Estado de la Red (CU01)                                                                                          |
 |-------------------|----------------------------------------------------------------------------------------------------------------------------|
 | **Actores**       | Técnico de Soporte                                                                                                         |
-| **Descripción**   | Permitir al técnico de soporte acceder al sistema para monitorear en tiempo real el estado de la red, visualizando métricas clave como uso de ancho de banda, velocidad de conexión y conexiones activas. |
+| **Descripción**   | Permitir al técnico de soporte acceder al sistema para monitorear el estado de la red, visualizando métricas clave como uso de ancho de banda, velocidad de conexión y conexiones activas. |
 | **Precondiciones**| El sistema debe estar operativo y el técnico debe contar con credenciales válidas.                                         |
 | **Flujo Normal**  |    |
 | **Acción del Actor**                                             | **Curso del Sistema**                                                                                   |
 | 1. Accede al sistema de monitoreo desde su dispositivo.          | 2. Muestra el panel principal con las métricas generales del estado de la red.                          |
-| 3. Selecciona un filtro en algún gráfico.             | 4. Presenta gráficos y datos en tiempo real sobre el estado de la red.                                  |
+| 3. Selecciona un filtro en algún gráfico.             | 4. Presenta gráficos y datos en sobre el estado de la red.                                  |
 | 5. Analiza las métricas presentadas.                             | 6. Resalta alertas en caso de detectar problemas o anomalías en la red.                                 |
 
 ---
