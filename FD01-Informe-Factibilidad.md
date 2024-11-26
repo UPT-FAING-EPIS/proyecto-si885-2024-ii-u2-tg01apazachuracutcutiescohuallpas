@@ -10,7 +10,7 @@
 
 **Escuela Profesional de Ingeniería de Sistemas**
 
-**Proyecto *"Herramienta de Seguimiento y Evaluación del Desempeño de Red en Computadoras UPT"***
+**Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)**
 
 Curso: Inteligencia de Negocios
 
