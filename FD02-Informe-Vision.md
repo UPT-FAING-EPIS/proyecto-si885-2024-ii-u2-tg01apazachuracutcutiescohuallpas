@@ -331,17 +331,15 @@ Escalabilidad: El sistema debe ser escalable para soportar el crecimiento de la 
 
 ## CONCLUSIONES <span id="conclusiones" class="anchor"></span>
 
-1. **Monitoreo en tiempo real:** El sistema de monitoreo proporcionará una forma eficiente de supervisar la red en tiempo real, lo que permitirá identificar problemas de conectividad o sobrecarga de los equipos de manera temprana, minimizando el tiempo de inactividad.
+1. **Alertas automáticas:** Las alertas automáticas ayudarán a mantener la red optimizada y a detectar problemas de conectividad antes de que se conviertan en fallos graves, mejorando la capacidad de respuesta del personal técnico.
 
-2. **Alertas automáticas:** Las alertas automáticas ayudarán a mantener la red optimizada y a detectar problemas de conectividad antes de que se conviertan en fallos graves, mejorando la capacidad de respuesta del personal técnico.
+2. **Generación de informes detallados:** Los informes detallados permitirán realizar análisis de rendimiento sobre la red, facilitando la toma de decisiones informadas sobre cómo mejorar la infraestructura tecnológica en base a datos concretos.
 
-3. **Generación de informes detallados:** Los informes detallados permitirán realizar análisis de rendimiento sobre la red, facilitando la toma de decisiones informadas sobre cómo mejorar la infraestructura tecnológica en base a datos concretos.
+3. **Optimización de recursos:** El monitoreo de los recursos de red permitirá optimizar el uso de los equipos, evitando sobrecargas y asegurando que los recursos estén siendo utilizados de manera eficiente, lo que redundará en un mejor desempeño general de la infraestructura tecnológica.
 
-4. **Optimización de recursos:** El monitoreo de los recursos de red permitirá optimizar el uso de los equipos, evitando sobrecargas y asegurando que los recursos estén siendo utilizados de manera eficiente, lo que redundará en un mejor desempeño general de la infraestructura tecnológica.
+4. **Satisfacción de los usuarios finales:** Al garantizar un mejor desempeño de la red y una experiencia más estable para los usuarios (estudiantes, docentes, etc.), se incrementará la satisfacción de los usuarios finales, lo que también impactará positivamente en la percepción de la calidad del servicio educativo.
 
-5. **Satisfacción de los usuarios finales:** Al garantizar un mejor desempeño de la red y una experiencia más estable para los usuarios (estudiantes, docentes, etc.), se incrementará la satisfacción de los usuarios finales, lo que también impactará positivamente en la percepción de la calidad del servicio educativo.
-
-6. **Eficiencia operativa:** La recopilación de datos de manera automatizada y la generación de informes periódicos permitirán al personal administrativo tomar decisiones con base en datos y mejorar la eficiencia operativa de los laboratorios, reduciendo posibles ineficiencias o fallos en los procesos tecnológicos.
+5. **Eficiencia operativa:** La recopilación de datos de manera automatizada y la generación de informes periódicos permitirán al personal administrativo tomar decisiones con base en datos y mejorar la eficiencia operativa de los laboratorios, reduciendo posibles ineficiencias o fallos en los procesos tecnológicos.
 
 
 <div style="page-break-after: always; visibility: hidden">\pagebreak</div>
