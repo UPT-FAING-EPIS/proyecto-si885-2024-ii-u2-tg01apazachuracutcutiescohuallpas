@@ -1,59 +1,55 @@
-[![Open in Codespaces](https://classroom.github.com/assets/launch-codespace-2972f46106e565e64193e422d61a12cf1da4916b45550586e14ef0a7c637dd04.svg)](https://classroom.github.com/open-in-codespaces?assignment_repo_id=17040174)
-
-
-# Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)
-
-**Descripción:**  
-El **Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)** tiene como objetivo supervisar en tiempo real el uso y desempeño de la red en los laboratorios de la Universidad Privada de Tacna. El sistema recopila datos sobre el consumo de ancho de banda, estabilidad de la conexión y otros aspectos relacionados con el rendimiento de la red. Esto permite identificar problemas de conectividad, optimizar el uso de los recursos de red y proporcionar soporte técnico proactivo, asegurando así un entorno educativo eficiente y libre de interrupciones.
-
-### Integrantes
-
-| Nombre                             | Insights Totales |
-|------------------------------------|-------------------|
-| Escobar Rejas, Carlos Andrés  | (2021070016) |
-| Apaza Ccalle, Albert Kenyi   | (2021071075) |
-| Ricardo Cutipa Gutierrez     | (2021069827) |
-| Erick Churacutipa Blass     | (2020067578) |
-| Jesus Huallpa Maron          | (2021071085) |
-
-
-
 
 ```markdown
-# Inventario de Archivos y Carpetas
+# SIMGR-UPT: Sistema de Monitoreo y Gestión de Red para Laboratorios UPT
 
-## **Carpeta Raíz**
-### Archivos Principales
-1. **`data/`**  
-   - Carpeta que contiene los archivos de datos en formato CSV.
-2. **`G02_UPTRED.pbix`**  
-   - Archivo de Power BI para el análisis y visualización de datos.
-3. **`lambda_function.zip`**  
-   - Archivo comprimido que contiene el código necesario para la función Lambda.
-     - `s3bucket.py`: Script para subir datos al bucket de S3.
-     - `datos_combinados.csv`: Archivo combinado generado a partir de los datos en `data`.
-4. **`requirements.txt`**  
-   - Archivo con las dependencias necesarias para ejecutar los scripts relacionados.
-5. **`s3bucket.py`**  
-   - Script Python para subir datos al bucket S3.
-6. **`sqlcsv.py`**  
-   - Script Python que toma los archivos CSV en la carpeta `data` y genera el archivo `datos_combinados.csv`.
+**Descripción:**  
+El **Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)** tiene como objetivo supervisar y gestionar en tiempo real el rendimiento de la red en los laboratorios de la Universidad Privada de Tacna. Esto incluye monitoreo de ancho de banda, estabilidad de la conexión y detección de problemas para optimizar los recursos y garantizar un entorno eficiente.
 
 ---
 
-## **Carpeta PruebasExpo**
-### Archivos y Aplicaciones
+## **Integrantes**
+
+| Nombre                             | Código             |
+|------------------------------------|--------------------|
+| Escobar Rejas, Carlos Andrés       | (2021070016)       |
+| Apaza Ccalle, Albert Kenyi         | (2021071075)       |
+| Ricardo Cutipa Gutierrez           | (2021069827)       |
+| Erick Churacutipa Blass            | (2020067578)       |
+| Jesus Huallpa Maron                | (2021071085)       |
+
+---
+
+## **Inventario de Archivos y Carpetas**
+
+### **Carpeta Raíz**
+1. **`data/`**  
+   - Contiene los archivos de datos en formato CSV utilizados por el sistema.
+2. **`G02_UPTRED.pbix`**  
+   - Archivo de Power BI para análisis y visualización de datos.
+3. **`lambda_function.zip`**  
+   - Comprimido con los siguientes componentes:
+     - `s3bucket.py`: Script para subir datos al bucket S3.
+     - `datos_combinados.csv`: Archivo combinado generado desde `data`.
+4. **`requirements.txt`**  
+   - Dependencias necesarias para los scripts Python.
+5. **`s3bucket.py`**  
+   - Script que sube archivos CSV al bucket S3.
+6. **`sqlcsv.py`**  
+   - Combina los CSV en `data` para generar `datos_combinados.csv`.
+
+---
+
+### **Carpeta PruebasExpo**
 1. **`APPs3uploaddata.exe`**  
-   - Aplicación desarrollada en Python para subir archivos CSV al bucket S3.
+   - Aplicación de escritorio en Python para subir archivos CSV al bucket S3.
 2. **`final data prueba.csv`**  
-   - Archivo CSV de prueba para insertar datos durante la demostración.
+   - Archivo de prueba para demostración.
 3. **`s3uploaddata.py`**  
-   - Código fuente de la aplicación **`APPs3uploaddata.exe`**.
+   - Código fuente de `APPs3uploaddata.exe`.
 
 ---
 
 ### **Estructura General**
-
 ```
 /
 ├── data/
@@ -71,81 +67,99 @@ El **Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)** 
 │   ├── s3uploaddata.py
 ```
 
-### **Notas**
-- **`data/`**: Asegúrate de que esta carpeta contiene los archivos CSV necesarios antes de ejecutar `sqlcsv.py`.
-- **`APPs3uploaddata.exe`**: Es una versión compilada de Python y debe ser probada antes de la exposición.
-- **`final data prueba.csv`**: Archivo dedicado a las pruebas de inserción durante la exposición.
-- **`s3bucket.py` y `sqlcsv.py`**: Los scripts deben ser configurados adecuadamente con las credenciales y configuraciones del bucket S3.
-```
+---
 
+## **Pasos de Automatización de Recursos**
 
-```markdown
-# EJECUCIÓN DE AUTOMATIZACIÓN DE RECURSOS
-### Primero eliminar recursos existentes y volver a armarlo:
+### **1. Configuración Inicial**
+- Asegúrate de tener los siguientes archivos en el entorno local:
+  - `sqlcsv.py`
+  - `s3bucket.py`
+  - `requirements.txt`
+  - `lambda_function.zip`
+  - Carpeta `data/` con los archivos CSV.
 
-1. Tener los archivos de artefactos (en tu entorno de trabajo local descargando el repositorio):
-   - `sqlcsv.py`
-   - `s3bucket.py`
-   - `requirements.txt`
-   - `lambda_function.zip` (este es el `datos_combinados.csv` con `s3bucket.py` generado)
-   - `datos_combinados.csv`
-   - La carpeta `data` con los SQL que transformaremos a CSV.
-
-2. Debemos ubicarnos donde está `cd infra` y tener:
-   - `main.tf` y `terraform.tfstate` (el `tfstate` se saca del repositorio. En tal caso, si da error, borrar manualmente desde la consola).
-
-3. Eliminar los recursos existentes de AWS:
+### **2. Eliminar Recursos Existentes**
+Si necesitas limpiar tu entorno, sigue estos pasos:
+1. Eliminar datos en el bucket S3:
    ```bash
    aws s3 rm s3://netuptinteligencianegocios --recursive
+   ```
+2. Eliminar crawler en AWS Glue:
+   ```bash
    aws glue delete-crawler --name netuptinteligencianegocios-crawler
    ```
-
-4. Destruir la infraestructura con Terraform:
+3. Destruir la infraestructura de AWS con Terraform:
    ```bash
    terraform destroy --auto-approve
    ```
 
-5. Ejecutar el workflow (esperar a que se creen las tablas).
+### **3. Configuración y Generación de Recursos**
+1. Ubícate en la carpeta que contiene `main.tf` (Terraform).
+2. Inicia Terraform:
+   ```bash
+   terraform init
+   ```
+3. Crea la infraestructura:
+   ```bash
+   terraform apply --auto-approve
+   ```
+
+### **4. Automatización con Scripts**
+1. Combina los archivos CSV de `data/` con `sqlcsv.py`:
+   ```bash
+   python3 sqlcsv.py
+   ```
+2. Sube el archivo combinado al bucket S3 con `s3bucket.py`:
+   ```bash
+   python3 s3bucket.py
+   ```
 
 ---
 
-# CONTROLADOR ODBC CONFIGURACIÓN
+## **Configuración del Controlador ODBC para Power BI**
 
-6. Descargar ODBC: [Amazon Athena ODBC Driver v2.0.3.0](https://downloads.athena.us-east-1.amazonaws.com/drivers/ODBC/v2.0.3.0/Windows/AmazonAthenaODBC-2.0.3.0.msi)
+### **1. Descargar e Instalar Controlador**
+- Descarga el controlador desde:  
+  [Amazon Athena ODBC Driver v2.0.3.0](https://downloads.athena.us-east-1.amazonaws.com/drivers/ODBC/v2.0.3.0/Windows/AmazonAthenaODBC-2.0.3.0.msi).
 
-7. Buscar en Windows "ODBC" (hay dos resultados: 32 bits y 64 bits, selecciona el controlador de **64 bits**).
+### **2. Configuración del ODBC**
+- Abre el Administrador de ODBC (64 bits).
+- Configura un nuevo DSN con los siguientes parámetros:
+  - **Data Source Name**: `athena-in`
+  - **Description**: `athena-in in Power BI`
+  - **Region**: `us-east-1`
+  - **Catalog**: `AwsDataCatalog`
+  - **Database**: `default`
+  - **Workgroup**: `primary`
+  - **S3 Output**: `s3://netuptinteligencianegocios/athena-output/`
+  - **Authentication Options**: `DEFAULT CREDENTIALS`
 
-8. Agregar el controlador Amazon Athena:
-   - **Data Source Name**: `athena-in`
-   - **Description**: `athena-in in power bi`
-   - **Region**: `us-east-1`
-   - **Catalog**: `AwsDataCatalog`
-   - **Database**: `default`
-   - **Workgroup**: `primary`
-   - **S3 Output**: `s3://netuptinteligencianegocios/athena-output/`
-   - **Authentication Options**: `DEFAULT CREDENTIALS` (Recuerda tener tus credenciales configuradas: `Access ID` y `Token`).
-
-9. Ejecutar el test:
-   - **Resultado esperado**:
-     ```
-     Successfully connected to: Athena engine version 3
-     Region: us-east-1
-     Catalog: AwsDataCatalog
-     Workgroup: primary
-     Auth Type: Default Credentials
-     ```
+### **3. Probar la Conexión**
+- Presiona **Test** en el ODBC configurado.
+- Resultado esperado:
+  ```
+  Successfully connected to: Athena engine version 3
+  Region: us-east-1
+  Catalog: AwsDataCatalog
+  Workgroup: primary
+  Auth Type: Default Credentials
+  ```
 
 ---
 
-# CARGAR DATOS EN POWER BI
+## **Carga de Datos en Power BI**
 
-10. Abrir Power BI y obtener datos de otro origen.
+1. Abre Power BI y selecciona **Obtener Datos → Amazon Athena**.
+2. Configura el DSN:
+   - Introduce el DSN configurado: `athena-in`.
+3. Selecciona las tablas disponibles desde `AwsDataCatalog` y cárgalas en Power BI.
+4. Realiza ajustes en las visualizaciones según sea necesario.
 
-11. Buscar y seleccionar **Amazon Athena**.
+---
 
-12. En el campo **DSN** colocar: `athena-in` y presionar **OK**. Los datos deberían cargar automáticamente.
-
-13. Expandir **AwsDataCatalog** → Expandir la tabla `tb_...` → Seleccionar la tabla deseada → Hacer clic en el botón verde de **Cargar**.
-
-   **Nota**: Si aparece un error relacionado con un paréntesis en 3 filas, simplemente bórralo, ya que no afecta al proceso de carga de datos.
+## **Notas Finales**
+- Asegúrate de que las credenciales de AWS están configuradas antes de ejecutar los scripts.
+- Antes de cargar datos en Power BI, verifica que el bucket S3 contiene los datos esperados.
+- Durante la exposición, utiliza `final data prueba.csv` para las pruebas de carga en tiempo real.
 ```
