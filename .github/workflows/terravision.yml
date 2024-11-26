@@ -6,48 +6,39 @@ on:
       - main
 
 jobs:
-  generate-readme:
+  generate_diagram:
     runs-on: ubuntu-latest
-
+    environment: production
+    
     steps:
-      - name: Checkout the main repository
+      # Paso 1: Configuración de Git y descarga del repositorio
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Install Terraform
-        run: |
-          curl -LO https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
-          unzip terraform_1.0.0_linux_amd64.zip
-          sudo mv terraform /usr/local/bin/
-      - name: Install Dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y graphviz python3-pip
-      - name: Install Python Modules
-        run: |
-          pip3 install graphviz numpy==1.21.0 GitPython tqdm debugpy ipaddr
-      - name: Clone Terravision Repository
-        run: |
-          git clone https://github.com/patrickchugh/terravision.git
-          cd terravision
-          chmod +x terravision
-            export PATH=$PATH:$(pwd)
-            
+      # Paso 2: Configurar credenciales de AWS para Terraform
+      - name: Set up AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # Puedes cambiar la región según sea necesario
+
+      # Paso 3: Inicializar y planificar Terraform en infra
       - name: Generate Terraform Plan
         run: |
-          cd infra # Asegúrate de estar en la carpeta correcta que contiene tu main.tf
+          cd infra
           terraform init
-          terraform plan -out=tfplan # Sin variables adicionales
+          terraform plan -out=tfplan
           terraform show -json tfplan > tfplan.json
 
-  
-      # Paso 3: Ejecutar Terravision para generar el diagrama desde infra/main.tf
+      # Paso 4: Ejecutar Terravision para generar el diagrama desde infra/main.tf
       - name: Run Terravision to Generate Diagram
         run: |
           cd infra
           terravision draw --source . # Ejecuta Terravision directamente en la carpeta donde se encuentra main.tf
           mv output.png ../diagram.png || mv diagram.png ../diagram.png || echo "El archivo no se generó como se esperaba"
-  
-      # Paso 4: Generar README.md
+
+      # Paso 5: Generar README.md
       - name: Generate README.md
         run: |
           echo "# Diagrama de Infraestructura" > README.md
@@ -65,8 +56,8 @@ jobs:
           echo "- Glue Crawler" >> README.md
           echo "- Lambda Function" >> README.md
           echo "- IAM Role" >> README.md
-  
-      # Paso 5: Commit y push de los cambios generados
+
+      # Paso 6: Commit y push de los cambios generados
       - name: Commit and Push README.md y Diagrama
         run: |
           git config --local user.name "tu_usuario"
