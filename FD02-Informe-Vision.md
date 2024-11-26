@@ -202,7 +202,7 @@ Metodología: Utilización de un script en Python para recopilar datos de rendim
 
 ### 3.3 Entorno de usuario <span id="entorno-usuario" class="anchor"></span>
 
-    Los usuarios interactúan con el sistema a través de una interfaz web intuitiva y fácil de usar. El sistema estará accesible desde navegadores web, permitiendo el monitoreo en tiempo real, la generación de informes y la configuración de alertas.
+    Los usuarios interactuarán con el sistema a través de una interfaz desarrollada en Python, diseñada para ser intuitiva y fácil de usar. El sistema será accesible desde computadoras, permitiendo la carga de datos, la generación de informes y la configuración de alertas.
 
 ### 3.4 Perfiles de los interesados <span id="perfiles-interesados" class="anchor"></span>
 
