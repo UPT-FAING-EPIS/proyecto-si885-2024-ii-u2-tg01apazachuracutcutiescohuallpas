@@ -13,13 +13,6 @@ jobs:
       - name: Checkout the main repository
         uses: actions/checkout@v3
 
-      - name: Checkout the Terraform repository
-        uses: actions/checkout@v3
-        with:
-          repository: UPT-FAING-EPIS/proyecto-si8811a-2024-ii-u1-desarrollo-api-back
-          path: terraform_repo  # Directorio donde se clonará el repo
-          ref: develop  # Rama donde están los archivos TF
-
       - name: Install Terraform
         run: |
           curl -LO https://releases.hashicorp.com/terraform/1.0.0/terraform_1.0.0_linux_amd64.zip
@@ -41,9 +34,8 @@ jobs:
 
       - name: Generate Terraform Plan
         run: |
-          cd terraform_repo
+          cd infra
           terraform init
-          terraform validate
           terraform plan -out=tfplan \
             -var="aws_region=us-east-1" \
             -var="s3_storage_gb=100" \
