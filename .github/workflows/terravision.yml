@@ -64,11 +64,12 @@ jobs:
             -var="lambda_runtime=python3.8" \
             -var="lambda_timeout=30" \
             -var="lambda_memory_size=128" \
-            -var="lambda_function_zip="../artefactos/lambda_function.zip" \
+            -var='lambda_function_zip=../artefactos/lambda_function.zip' \
             -var="role_name=LabRole" \
             -var="policy_name=InRol" \
             -var="role_policy_arn=arn:aws:iam::571600849867:role/LabRole"
           terraform show -json tfplan > tfplan.json
+
       - name: Run Terravision to Generate Diagram
         run: |
           cd terravision
