@@ -225,10 +225,10 @@ La vista de caso de uso describe las principales funcionalidades del sistema des
 
 ### **Casos de Uso Principales**
 1. **CU01: Monitorear Estado de la Red**
-   - **Descripción:** El técnico de soporte accede al sistema para monitorear en tiempo real las métricas de red, como velocidad, uso de ancho de banda y conexiones activas.
+   - **Descripción:** El técnico de soporte accede al sistema para monitorear las métricas de red, como velocidad, uso de ancho de banda y conexiones activas.
    - **Flujo Principal:**
      1. El técnico inicia sesión en el sistema.
-     2. Accede al dashboard para visualizar métricas de red en tiempo real.
+     2. Accede al dashboard para visualizar las métricas de red.
      3. Identifica posibles problemas mediante alertas visuales.
      4. Realiza acciones correctivas según sea necesario.
    - **Actor Principal:** Técnico de Soporte.
