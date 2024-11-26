@@ -28,7 +28,7 @@ El **Sistema de Monitoreo y Gestión de Red para Laboratorios UPT (SIMGR-UPT)** 
 ![Construcción de la Infraestructura](media/diagramaBrainboard.png)
 
 ### 2. Interacción del Usuario sobre lo Creado
-![Interacción del Usuario](media/Brainboard - athena.png)
+![Interacción del Usuario](media/Brainboard-athena.png).
 
 
 ## Inventario de Archivos y Carpetas
