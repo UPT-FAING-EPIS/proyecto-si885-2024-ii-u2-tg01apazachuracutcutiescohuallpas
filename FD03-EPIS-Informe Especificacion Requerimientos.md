@@ -1,7 +1,6 @@
 <center>
 
 ![Logo de Mi Empresa](./media/logo-upt.png)
-![Logo de mi Cliente](./media/logo-cliente.png)
 
 # UNIVERSIDAD PRIVADA DE TACNA  
 ## FACULTAD DE INGENIERÍA  
