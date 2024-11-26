@@ -242,7 +242,7 @@ El sistema de monitoreo proporcionará una solución integral para el seguimient
 
 | **Beneficios para el Área de TI y Soporte Técnico** | **Principales características** |
 |----------------------------------------------------|---------------------------------|
-| **Monitoreo en tiempo real** | Permite el seguimiento continuo del uso de la red, así como la identificación de posibles cuellos de botella en el uso de recursos. |
+| **Monitoreo continuo** | Permite el seguimiento del uso de la red, así como la identificación de posibles cuellos de botella en el uso de recursos. |
 | **Alertas automáticas** | Genera notificaciones en tiempo real ante cualquier anomalía detectada en la red, facilitando una respuesta rápida y efectiva. |
 | **Reportes detallados** | Genera informes automatizados y personalizables sobre el uso de la red, lo que permite una toma de decisiones informada. |
 | **Análisis comparativo** | Posibilidad de comparar el rendimiento de la red entre distintos laboratorios para identificar cuáles presentan más problemas de conectividad. |
