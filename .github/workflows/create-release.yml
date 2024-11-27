@@ -32,9 +32,7 @@ jobs:
         draft: false
         prerelease: false
         body: ${{ steps.changelog.outputs.changelog || 'No se generaron cambios automáticamente.' }}
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        
+
     # Generar artefacto (opcional)
     - name: Build Artifact
       run: |
