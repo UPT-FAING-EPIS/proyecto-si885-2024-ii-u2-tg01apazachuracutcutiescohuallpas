@@ -29,8 +29,6 @@ jobs:
           draft: false
           prerelease: false
           body: ${{ steps.changelog.outputs.changelog || 'No se generaron cambios automáticamente.' }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.MY_GITHUB_TOKEN }}  # Usa el PAT personalizado
 
       - name: Build Artifact
         run: |
