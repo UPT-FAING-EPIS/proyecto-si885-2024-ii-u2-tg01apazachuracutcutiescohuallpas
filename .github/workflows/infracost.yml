@@ -1,13 +1,16 @@
-name: AWS Cost Report with Infracost
+
+name: infracost
 
 on:
-  workflow_dispatch: # Esto permite que el flujo se ejecute manualmente desde la UI de GitHub
+  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
   aws-connectivity:
     runs-on: ubuntu-latest
 
-    steps:
+    steps: 
       # Paso 1: Checkout del código
       - name: Checkout code
         uses: actions/checkout@v3
@@ -17,32 +20,107 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y awscli
-
-      # Paso 3: Configurar las credenciales de AWS
+      # Paso 3: Instalar Terraform
+      - name: Install Terraform
+        run: |
+          # Descargar la clave GPG de HashiCorp
+          wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
+          
+          # Agregar el repositorio de HashiCorp
+          echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+          
+          # Actualizar apt e instalar Terraform
+          sudo apt update && sudo apt install -y terraform
+      # Paso 4: Configurar las credenciales de AWS
       - name: Configure AWS credentials
         run: |
           aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set region us-east-1
+      # Paso 5: Verificar las credenciales con AWS STS
+      - name: Get AWS Caller Identity
+        run: aws sts get-caller-identity
 
-      # Paso 4: Obtener costos de AWS Cost Explorer
-      - name: Get AWS Cost Data for Lambda, S3, and Glue
-        id: cost_data
+      # Paso 6: Inicializar Terraform
+      - name: Initialize Terraform
         run: |
-          # Formateo la fecha de inicio y fin
-          START_DATE=$(date +%Y-%m-01)
-          END_DATE=$(date +%Y-%m-28)  # O puedes usar `date +%Y-%m-%d` para el día actual
+          cd infra
+          terraform init
+      # Paso 8: Validar la configuración de Terraform
+      - name: Validate Terraform configuration
+        run: |
+          cd infra
+          terraform validate
+      # Paso 9: Verificar el estado actual de Terraform
+      - name: Check Terraform state
+        run: |
+          cd infra
+          terraform state list
+      # Paso 10: Generar el plan de Terraform
+      - name: Terraform Plan
+        run: |
+          cd infra
+          terraform plan -out=tfplan
+          terraform show -json tfplan > tfplan.json
+      # Paso 11: Instalar Infracost
+      - name: Install Infracost
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
+          infracost configure set api_key ${{ secrets.INFRACOST_API_KEY }}
+          infracost configure set currency USD
+      - name: Generate Infracost Breakdown
+        working-directory: ./infra
+        run: |
+          # Generar el desglose mensual
+          infracost breakdown --path=tfplan.json --format json --out-file infracost.json
           
-          # Llamo a AWS Cost Explorer para obtener los costos de los servicios
-          COSTS=$(aws ce get-cost-and-usage \
-            --time-period Start=$START_DATE,End=$END_DATE \
-            --granularity MONTHLY \
-            --metrics "BlendedCost" \
-            --group-by Type=DIMENSION,Key=SERVICE \
-            --filter '{"Dimensions":{"Key":"SERVICE","Values":["AWS Lambda","Amazon S3","AWS Glue"]}}' | jq -c '.')
+          # Verificar que el costo mensual esté presente
+          infracost output --path infracost.json --format table > infracost_monthly.txt
+          MONTHLY_COST=$(infracost output --path infracost.json --format json | jq '.projects[0].breakdown.totalMonthlyCost')
+      
+          # Agregar el costo estimado manualmente
+          LAMBDA_INVOCATIONS=100
+          S3_PUT_REQUESTS=100
+          GLUE_CRAWLER_HOURS=1
+          
+          MONTHLY_LAMBDA_COST=$(echo "$LAMBDA_INVOCATIONS * 30 * 0.20 / 1000000" | bc)
+          MONTHLY_S3_PUT_COST=$(echo "$S3_PUT_REQUESTS * 30 * 0.005 / 1000" | bc)
+          MONTHLY_GLUE_COST=$(echo "$GLUE_CRAWLER_HOURS * 30 * 0.44" | bc)
+          
+          # Calcular el costo mensual total estimado
+          ESTIMATED_MONTHLY_COST=$(echo "$MONTHLY_LAMBDA_COST + $MONTHLY_S3_PUT_COST + $MONTHLY_GLUE_COST" | bc)
+          
+          # Verificar si el costo mensual está presente y es mayor que 0
+          if [[ "$ESTIMATED_MONTHLY_COST" != "null" && "$ESTIMATED_MONTHLY_COST" != "0.00" ]]; then
+            # Calcular el costo anual
+            ANNUAL_COST=$(echo "$ESTIMATED_MONTHLY_COST * 12" | bc)
+            echo "$ANNUAL_COST" > infracost_annual.txt
+          else
+            echo "Costo mensual no disponible o es 0.00" > infracost_annual.txt
+          fi
 
-          # Debug: Mostrar la salida de los costos obtenidos
-          echo "AWS Cost Data for Lambda, S3, and Glue: $COSTS"
 
-          # Establecer la variable de entorno para los costos
-          echo "COSTS=$COSTS" >> $GITHUB_ENV
+      # Paso 13: Mostrar el informe de costos mensuales y anuales
+      - name: Display Infracost Reports
+        working-directory: ./infra
+        run: |
+          echo "COSTOS MENSUALES:"
+          cat infracost_monthly.txt
+          echo "COSTO ANUAL ESTIMADO:"
+          cat infracost_annual.txt
+      
+      # Paso 14: Subir informes de costos como artefactos
+      - name: Upload Infracost Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: infracost-reports
+          path: |
+            ./infra/infracost.json
+            ./infra/infracost_monthly.txt
+            ./infra/infracost_annual.txt
+      # Paso 16: Limpiar credenciales de AWS (opcional)
+      - name: Clean up AWS CLI session
+        run: |
+          unset AWS_ACCESS_KEY_ID
+          unset AWS_SECRET_ACCESS_KEY
+          unset AWS_SESSION_TOKEN
