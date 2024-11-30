@@ -1,10 +1,3 @@
-name: infracost
-
-on:
-  workflow_dispatch:
-    branches:
-      - main
-
 jobs:
   aws-connectivity:
     runs-on: ubuntu-latest
@@ -27,11 +20,7 @@ jobs:
           aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws configure set region us-east-1
 
-      # Paso 4: Verificar las credenciales con AWS STS
-      - name: Get AWS Caller Identity
-        run: aws sts get-caller-identity
-
-      # Paso 5: Obtener costos con AWS Cost Explorer (para Lambda, S3 y Glue)
+      # Paso 4: Obtener costos de AWS Cost Explorer
       - name: Get AWS Cost Data for Lambda, S3, and Glue
         id: cost_data
         run: |
@@ -41,33 +30,29 @@ jobs:
             --metrics "BlendedCost" \
             --group-by Type=DIMENSION,Key=SERVICE \
             --filter '{"Dimensions":{"Key":"SERVICE","Values":["AWS Lambda","Amazon S3","AWS Glue"]}}' | jq -c '.')
-
+          
           echo "AWS Cost Data for Lambda, S3, and Glue: $COSTS"
           echo "COSTS=$COSTS" >> $GITHUB_ENV
 
-      # Paso 6: Instalar Infracost
+      # Paso 5: Instalar Infracost
       - name: Install Infracost
         run: |
           curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
           infracost configure set api_key ${{ secrets.INFRACOST_API_KEY }}
           infracost configure set currency USD
 
-      # Paso 7: Generar el plan de Terraform (asegurándose de que tfplan.json exista)
+      # Paso 6: Generar el plan de Terraform
       - name: Generate Terraform Plan
         run: |
           terraform plan -out=tfplan
           terraform show -json tfplan > tfplan.json
 
-      # Paso 8: Generar el desglose mensual con Infracost
+      # Paso 7: Generar el desglose mensual con Infracost
       - name: Generate Infracost Breakdown
-        working-directory: ./infra
         run: |
-          # Generar el desglose mensual con Infracost
           infracost breakdown --path=tfplan.json --format json --out-file infracost.json
-          
-          # Verificar que el costo mensual esté presente
           infracost output --path infracost.json --format table > infracost_monthly.txt
-          
+
           # Extraer los costos específicos de los servicios de AWS Cost Explorer y agregarlos al archivo
           LAMBDA_COST=$(echo ${{ env.COSTS }} | jq '.ResultsByTime[0].Groups[] | select(.Keys[0] == "AWS Lambda") | .Metrics.BlendedCost.Amount')
           S3_COST=$(echo ${{ env.COSTS }} | jq '.ResultsByTime[0].Groups[] | select(.Keys[0] == "Amazon S3") | .Metrics.BlendedCost.Amount')
@@ -77,14 +62,13 @@ jobs:
           echo "Costo mensual de Amazon S3: $S3_COST" >> infracost_monthly.txt
           echo "Costo mensual de AWS Glue: $GLUE_COST" >> infracost_monthly.txt
 
-      # Paso 9: Mostrar el informe de costos mensuales
+      # Paso 8: Mostrar el informe de costos mensuales
       - name: Display Infracost Reports
-        working-directory: ./infra
         run: |
           echo "COSTOS MENSUALES:"
           cat infracost_monthly.txt
 
-      # Paso 10: Subir informes de costos como artefactos
+      # Paso 9: Subir informes de costos como artefactos
       - name: Upload Infracost Reports
         uses: actions/upload-artifact@v3
         with:
