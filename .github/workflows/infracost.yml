@@ -86,10 +86,22 @@ jobs:
           infracost output --path infracost.json --format table > infracost_monthly.txt
           MONTHLY_COST=$(infracost output --path infracost.json --format json | jq '.projects[0].breakdown.totalMonthlyCost')
       
+          # Agregar el costo estimado manualmente
+          LAMBDA_INVOCATIONS=100
+          S3_PUT_REQUESTS=100
+          GLUE_CRAWLER_HOURS=1
+          
+          MONTHLY_LAMBDA_COST=$(echo "$LAMBDA_INVOCATIONS * 30 * 0.20 / 1000000" | bc)
+          MONTHLY_S3_PUT_COST=$(echo "$S3_PUT_REQUESTS * 30 * 0.005 / 1000" | bc)
+          MONTHLY_GLUE_COST=$(echo "$GLUE_CRAWLER_HOURS * 30 * 0.44" | bc)
+          
+          # Calcular el costo mensual total estimado
+          ESTIMATED_MONTHLY_COST=$(echo "$MONTHLY_LAMBDA_COST + $MONTHLY_S3_PUT_COST + $MONTHLY_GLUE_COST" | bc)
+          
           # Verificar si el costo mensual está presente y es mayor que 0
-          if [[ "$MONTHLY_COST" != "null" && "$MONTHLY_COST" != "0.00" ]]; then
+          if [[ "$ESTIMATED_MONTHLY_COST" != "null" && "$ESTIMATED_MONTHLY_COST" != "0.00" ]]; then
             # Calcular el costo anual
-            ANNUAL_COST=$(echo "$MONTHLY_COST * 12" | bc)
+            ANNUAL_COST=$(echo "$ESTIMATED_MONTHLY_COST * 12" | bc)
             echo "$ANNUAL_COST" > infracost_annual.txt
           else
             echo "Costo mensual no disponible o es 0.00" > infracost_annual.txt
