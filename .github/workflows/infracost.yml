@@ -11,7 +11,7 @@ jobs:
 
     steps: 
       # Paso 1: Checkout del código
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
       # Paso 2: Instalar AWS CLI
@@ -23,95 +23,81 @@ jobs:
       # Paso 3: Instalar Terraform
       - name: Install Terraform
         run: |
-          # Descargar la clave GPG de HashiCorp
-          wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-          
-          # Agregar el repositorio de HashiCorp
+          # Agregar repositorio oficial de HashiCorp
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo tee /usr/share/keyrings/hashicorp-archive-keyring.gpg
           echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-          
-          # Actualizar apt e instalar Terraform
-          sudo apt update && sudo apt install -y terraform
+          sudo apt-get update
+          sudo apt-get install -y terraform
 
       # Paso 4: Configurar las credenciales de AWS
-      - name: Configure AWS credentials
+      - name: Configure AWS Credentials
         run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws configure set region us-east-1
+          aws configure set aws_access_key_id "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          aws configure set aws_secret_access_key "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          aws configure set region "us-east-1"
 
-      # Paso 5: Verificar las credenciales con AWS STS
-      - name: Get AWS Caller Identity
+      # Paso 5: Verificar las credenciales
+      - name: Verify AWS Connectivity
         run: aws sts get-caller-identity
 
       # Paso 6: Inicializar Terraform
       - name: Initialize Terraform
-        run: |
-          cd infra
-          terraform init
+        working-directory: infra
+        run: terraform init
 
-      # Paso 8: Validar la configuración de Terraform
-      - name: Validate Terraform configuration
-        run: |
-          cd infra
-          terraform validate
+      # Paso 7: Validar la configuración de Terraform
+      - name: Validate Terraform Configuration
+        working-directory: infra
+        run: terraform validate
 
-      # Paso 9: Verificar el estado actual de Terraform
-      - name: Check Terraform state
-        run: |
-          cd infra
-          terraform state list
-
-      # Paso 10: Generar el plan de Terraform
+      # Paso 8: Generar el plan de Terraform
       - name: Terraform Plan
+        working-directory: infra
         run: |
-          cd infra
           terraform plan -out=tfplan
           terraform show -json tfplan > tfplan.json
 
-      # Paso 11: Instalar Infracost
-      - name: Install Infracost
+      # Paso 9: Instalar y configurar Infracost
+      - name: Install and Configure Infracost
         run: |
           curl -fsSL https://raw.githubusercontent.com/infracost/infracost/master/scripts/install.sh | sh
-          infracost configure set api_key ${{ secrets.INFRACOST_API_KEY }}
+          infracost configure set api_key "${{ secrets.INFRACOST_API_KEY }}"
           infracost configure set currency USD
 
-      # Paso 12: Generar el desglose de costos con Infracost (incluyendo cálculo anual)
+      # Paso 10: Generar el desglose de costos
       - name: Generate Infracost Breakdown
-        working-directory: ./infra
+        working-directory: infra
         run: |
-          # Generar el desglose mensual
           infracost breakdown --path=tfplan.json --format json --out-file infracost.json
-          # Generar el desglose anual basado en el desglose mensual
           infracost output --path infracost.json --format table > infracost_monthly.txt
           infracost output --path infracost.json --format json | jq '.projects[0].breakdown.totalMonthlyCost * 12' > infracost_annual.txt
       
-      # Paso 13: Mostrar el informe de costos mensuales y anuales
+      # Paso 11: Mostrar informes de costos
       - name: Display Infracost Reports
-        working-directory: ./infra
+        working-directory: infra
         run: |
           echo "COSTOS MENSUALES:"
           cat infracost_monthly.txt
           echo "COSTO ANUAL ESTIMADO:"
           cat infracost_annual.txt
-      
-      # Paso 14: Subir informes de costos como artefactos
+
+      # Paso 12: Subir los informes como artefactos
       - name: Upload Infracost Reports
         uses: actions/upload-artifact@v3
         with:
           name: infracost-reports
           path: |
-            ./infra/infracost.json
-            ./infra/infracost_monthly.txt
-            ./infra/infracost_annual.txt
+            infra/infracost.json
+            infra/infracost_monthly.txt
+            infra/infracost_annual.txt
 
-      # Paso 15: Aplicar la configuración de Terraform
-      #- name: Apply Terraform configuration
-      #  run: |
-      #   cd infra
-      #   terraform apply -auto-approve || echo "Si el recurso ya existe, continuamos sin crear nuevos recursos."
+      # Paso 13: Aplicar la configuración de Terraform (opcional)
+      #- name: Apply Terraform Configuration
+      #  working-directory: infra
+      #  run: terraform apply -auto-approve
 
-      # Paso 16: Limpiar credenciales de AWS (opcional)
-      - name: Clean up AWS CLI session
+      # Paso 14: Limpiar credenciales de AWS
+      - name: Clean Up AWS Credentials
         run: |
           unset AWS_ACCESS_KEY_ID
           unset AWS_SECRET_ACCESS_KEY
