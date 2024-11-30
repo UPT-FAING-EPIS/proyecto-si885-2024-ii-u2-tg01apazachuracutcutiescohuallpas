@@ -76,15 +76,25 @@ jobs:
           infracost configure set api_key ${{ secrets.INFRACOST_API_KEY }}
           infracost configure set currency USD
 
-      # Paso 12: Generar el desglose de costos con Infracost (incluyendo cálculo anual)
       - name: Generate Infracost Breakdown
         working-directory: ./infra
         run: |
           # Generar el desglose mensual
           infracost breakdown --path=tfplan.json --format json --out-file infracost.json
-          # Generar el desglose anual basado en el desglose mensual
+          
+          # Verificar que el costo mensual esté presente
           infracost output --path infracost.json --format table > infracost_monthly.txt
-          infracost output --path infracost.json --format json | jq '.projects[0].breakdown.totalMonthlyCost * 12' > infracost_annual.txt
+          MONTHLY_COST=$(infracost output --path infracost.json --format json | jq '.projects[0].breakdown.totalMonthlyCost')
+      
+          # Verificar si el costo mensual está presente y es mayor que 0
+          if [[ "$MONTHLY_COST" != "null" && "$MONTHLY_COST" != "0.00" ]]; then
+            # Calcular el costo anual
+            ANNUAL_COST=$(echo "$MONTHLY_COST * 12" | bc)
+            echo "$ANNUAL_COST" > infracost_annual.txt
+          else
+            echo "Costo mensual no disponible o es 0.00" > infracost_annual.txt
+          fi
+
       
       # Paso 13: Mostrar el informe de costos mensuales y anuales
       - name: Display Infracost Reports
