@@ -2,52 +2,35 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Crear un bucket S3 con replicación global y versionado
+# Crear un bucket S3 con replicación
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = "netuptinteligencianegocios"
-  
-  versioning {
-    enabled = true
+  tags = {
+    Name = "S3 Bucket Inteligencia Negocios"
   }
 
   replication_configuration {
     role = aws_iam_role.lab_role.arn
-    rules = [
-      {
-        id     = "replicate-to-eu"
-        status = "Enabled"
-        destination {
-          bucket        = "arn:aws:s3:::netuptinteligencianegocios-eu"
-          storage_class = "INTELLIGENT_TIERING"
-        }
-      },
-      {
-        id     = "replicate-to-ap"
-        status = "Enabled"
-        destination {
-          bucket        = "arn:aws:s3:::netuptinteligencianegocios-ap"
-          storage_class = "INTELLIGENT_TIERING"
-        }
+
+    rules {
+      id     = "replicate-to-eu"
+      status = "Enabled"
+
+      destination {
+        bucket        = "arn:aws:s3:::netuptinteligencianegocios-eu"
+        storage_class = "INTELLIGENT_TIERING"
       }
-    ]
-  }
+    }
 
-  logging {
-    target_bucket = "arn:aws:s3:::netuptinteligencianegocios-logs"
-    target_prefix = "access-logs/"
-  }
+    rules {
+      id     = "replicate-to-ap"
+      status = "Enabled"
 
-  tags = {
-    Name = "S3 Bucket Inteligencia Negocios (Costoso)"
-  }
-}
-
-# Crear un bucket para logs
-resource "aws_s3_bucket" "log_bucket" {
-  bucket = "netuptinteligencianegocios-logs"
-  acl    = "log-delivery-write"
-  tags = {
-    Name = "S3 Bucket Logs"
+      destination {
+        bucket        = "arn:aws:s3:::netuptinteligencianegocios-ap"
+        storage_class = "INTELLIGENT_TIERING"
+      }
+    }
   }
 }
 
@@ -80,7 +63,7 @@ resource "aws_glue_crawler" "netuptinteligencianegocios_crawler" {
     Name = "Glue Crawler Inteligencia Negocios"
   }
 
-  depends_on = [aws_s3_bucket.s3_bucket]
+  depends_on = [aws_s3_bucket.s3_bucket] # Asegura que el bucket S3 sea creado antes del Crawler
 }
 
 # Crear el rol IAM LabRole
@@ -92,7 +75,7 @@ resource "aws_iam_role" "lab_role" {
       {
         Effect = "Allow"
         Principal = {
-          Service = ["glue.amazonaws.com", "lambda.amazonaws.com", "s3.amazonaws.com"]
+          Service = ["glue.amazonaws.com", "lambda.amazonaws.com"]
         }
         Action = "sts:AssumeRole"
       }
@@ -122,16 +105,16 @@ resource "aws_iam_role_policy_attachment" "in_rol_policy_attachment" {
   policy_arn = aws_iam_policy.in_rol_policy.arn
 }
 
-# Crear la función Lambda con máxima memoria y timeout
+# Crear la función Lambda con costos altos
 resource "aws_lambda_function" "s3_upload_lambda" {
-  filename         = "../artefactos/lambda_function.zip"
-  function_name    = "s3-upload-function-costosa"
-  role             = aws_iam_role.lab_role.arn
-  handler          = "s3bucket.lambda_handler"
-  runtime          = "python3.8"
-  timeout          = 900             # 15 minutos
-  memory_size      = 10240           # 10 GB
-  source_code_hash = filebase64sha256("../artefactos/lambda_function.zip")
+  filename         = "../artefactos/lambda_function.zip"  # Ruta relativa al archivo ZIP de la función Lambda
+  function_name    = "s3-upload-function"
+  role             = aws_iam_role.lab_role.arn  # Usar el rol creado
+  handler          = "s3bucket.lambda_handler"  # El nombre de la función de entrada del código Python
+  runtime          = "python3.8"  # Runtime Python 3.8
+  timeout          = 900  # Tiempo máximo (15 minutos)
+  memory_size      = 10240  # 10 GB de memoria
+  source_code_hash = filebase64sha256("../artefactos/lambda_function.zip")  # Hash del archivo ZIP
 
   environment {
     variables = {
@@ -140,12 +123,12 @@ resource "aws_lambda_function" "s3_upload_lambda" {
   }
 }
 
-# Crear un evento en S3 para activar la función Lambda frecuentemente
+# Crear un evento en S3 para activar la función Lambda
 resource "aws_s3_bucket_notification" "s3_event_to_lambda" {
   bucket = aws_s3_bucket.s3_bucket.bucket
 
   lambda_function {
-    events             = ["s3:ObjectCreated:*", "s3:ObjectRemoved:*"]
+    events             = ["s3:ObjectCreated:*"]
     lambda_function_arn = aws_lambda_function.s3_upload_lambda.arn
   }
 
