@@ -105,10 +105,10 @@ jobs:
             ./infra/infracost_annual.txt
 
       # Paso 15: Aplicar la configuración de Terraform
-      - name: Apply Terraform configuration
-        run: |
-          cd infra
-          terraform apply -auto-approve || echo "Si el recurso ya existe, continuamos sin crear nuevos recursos."
+      #- name: Apply Terraform configuration
+      #  run: |
+      #   cd infra
+      #   terraform apply -auto-approve || echo "Si el recurso ya existe, continuamos sin crear nuevos recursos."
 
       # Paso 16: Limpiar credenciales de AWS (opcional)
       - name: Clean up AWS CLI session
