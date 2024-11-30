@@ -1,3 +1,8 @@
+name: AWS Cost Report with Infracost
+
+on:
+  workflow_dispatch: # Esto permite que el flujo se ejecute manualmente desde la UI de GitHub
+
 jobs:
   aws-connectivity:
     runs-on: ubuntu-latest
