@@ -49,6 +49,8 @@ jobs:
       # Paso 6: Generar el plan de Terraform
       - name: Generate Terraform Plan
         run: |
+          cd infra # Asegúrate de que los archivos .tf estén en el directorio 'infra'
+          terraform init # Inicializa Terraform
           terraform plan -out=tfplan
           terraform show -json tfplan > tfplan.json
 
