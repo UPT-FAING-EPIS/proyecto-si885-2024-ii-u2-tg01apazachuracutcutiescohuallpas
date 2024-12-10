@@ -2,35 +2,11 @@ provider "aws" {
   region = "us-east-1"
 }
 
-# Crear un bucket S3 con replicación
+# Crear un bucket S3
 resource "aws_s3_bucket" "s3_bucket" {
   bucket = "netuptinteligencianegocios"
   tags = {
     Name = "S3 Bucket Inteligencia Negocios"
-  }
-
-  replication_configuration {
-    role = aws_iam_role.lab_role.arn
-
-    rules {
-      id     = "replicate-to-eu"
-      status = "Enabled"
-
-      destination {
-        bucket        = "arn:aws:s3:::netuptinteligencianegocios-eu"
-        storage_class = "INTELLIGENT_TIERING"
-      }
-    }
-
-    rules {
-      id     = "replicate-to-ap"
-      status = "Enabled"
-
-      destination {
-        bucket        = "arn:aws:s3:::netuptinteligencianegocios-ap"
-        storage_class = "INTELLIGENT_TIERING"
-      }
-    }
   }
 }
 
@@ -99,21 +75,22 @@ resource "aws_iam_policy" "in_rol_policy" {
   })
 }
 
+
 # Asociar la política al rol LabRole
 resource "aws_iam_role_policy_attachment" "in_rol_policy_attachment" {
   role       = aws_iam_role.lab_role.name
   policy_arn = aws_iam_policy.in_rol_policy.arn
 }
 
-# Crear la función Lambda con costos altos
+# Crear la función Lambda
 resource "aws_lambda_function" "s3_upload_lambda" {
   filename         = "../artefactos/lambda_function.zip"  # Ruta relativa al archivo ZIP de la función Lambda
   function_name    = "s3-upload-function"
   role             = aws_iam_role.lab_role.arn  # Usar el rol creado
   handler          = "s3bucket.lambda_handler"  # El nombre de la función de entrada del código Python
   runtime          = "python3.8"  # Runtime Python 3.8
-  timeout          = 900  # Tiempo máximo (15 minutos)
-  memory_size      = 10240  # 10 GB de memoria
+  timeout          = 30
+  memory_size      = 128
   source_code_hash = filebase64sha256("../artefactos/lambda_function.zip")  # Hash del archivo ZIP
 
   environment {
@@ -142,3 +119,9 @@ resource "aws_lambda_permission" "allow_s3_to_invoke_lambda" {
   principal     = "s3.amazonaws.com"
   source_arn    = aws_s3_bucket.s3_bucket.arn
 }
+
+#gets id
+#2 aws glue get-crawler --name netuptinteligencianegocios-crawler
+#0 subir ejecutar ecript pythonde subir csv
+#aws glue get-crawler --name netuptinteligencianegocios-crawler
+#aws glue get-databases
